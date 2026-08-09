@@ -15,7 +15,7 @@ SELECT DISTINCT ON (loan_id)
         WHEN TRIM(home_ownership) = 'HaveMortgage' THEN 'Home Mortgage'
         ELSE INITCAP(TRIM(home_ownership))
     END AS home_ownership,
-    INITCAP(TRIM(purpose)) AS purpose,
+    INITCAP(REPLACE(TRIM(purpose), '_', ' ')) AS purpose,
     monthly_debt,
     years_credit_history,
     months_since_last_delinquent,
@@ -31,3 +31,12 @@ WHERE loan_id IS NOT NULL
   AND customer_id IS NOT NULL
   AND (current_loan_amount IS NULL OR current_loan_amount < 99999999)
 ORDER BY loan_id, credit_score DESC NULLS LAST;
+
+
+SELECT COUNT(*) FROM loans_clean;
+
+SELECT ROUND(AVG(current_loan_amount), 2) FROM loans_clean;
+
+SELECT DISTINCT home_ownership FROM loans_clean;
+
+SELECT DISTINCT purpose FROM loans_clean;
