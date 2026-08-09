@@ -5,15 +5,17 @@ SELECT DISTINCT ON (loan_id)
     TRIM(loan_status) AS loan_status,
     current_loan_amount,
     term,
-    -- Исправляем аномалию: значения credit_score > 850 записаны с лишним нулём
     CASE
         WHEN credit_score > 850 THEN ROUND(credit_score / 10)
         ELSE credit_score
     END AS credit_score,
     annual_income,
     years_in_job,
-    TRIM(home_ownership) AS home_ownership,
-    TRIM(purpose) AS purpose,
+    CASE 
+        WHEN TRIM(home_ownership) = 'HaveMortgage' THEN 'Home Mortgage'
+        ELSE INITCAP(TRIM(home_ownership))
+    END AS home_ownership,
+    INITCAP(TRIM(purpose)) AS purpose,
     monthly_debt,
     years_credit_history,
     months_since_last_delinquent,
@@ -27,6 +29,5 @@ FROM loans
 WHERE loan_id IS NOT NULL
   AND loan_id <> ''
   AND customer_id IS NOT NULL
+  AND (current_loan_amount IS NULL OR current_loan_amount < 99999999)
 ORDER BY loan_id, credit_score DESC NULLS LAST;
-
-
