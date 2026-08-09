@@ -37,18 +37,3 @@ SELECT
     ROUND(AVG(monthly_debt), 2) AS avg_monthly_debt
 FROM loans_clean
 GROUP BY loan_status; 
---Правда ли нет повторных клиентов?
-SELECT customer_id, COUNT(*) AS loans_per_customer
-FROM loans_clean
-GROUP BY customer_id
-HAVING COUNT(*) > 1
-ORDER BY loans_per_customer DESC
-LIMIT 10;
---выбросы в Current Loan Amount
-SELECT MIN(current_loan_amount), MAX(current_loan_amount), 
-       PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY current_loan_amount) AS median_amount
-FROM loans_clean;
---сколько записей с явно "выбросным" значением
-SELECT COUNT(*) 
-FROM loans_clean 
-WHERE current_loan_amount > 1000000;
