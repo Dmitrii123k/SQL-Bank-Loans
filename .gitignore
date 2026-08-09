@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Python (если будете использовать)
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Данные — исходный файл большой, в репозиторий лучше не тащить целиком
+data/raw/*.csv
+!data/raw/.gitkeep
+data/processed/*.csv
+!data/processed/.gitkeep
+
+# Tableau
+*.hyper
+*.tde
+*.tableau-prep.log
+
+# Power BI (если позже подключите)
+*.pbix.bak
+
+# Секреты / доступы к БД — ОБЯЗАТЕЛЬНО игнорировать
+config.json
+secrets.yaml
+*.env
+db_credentials.*
